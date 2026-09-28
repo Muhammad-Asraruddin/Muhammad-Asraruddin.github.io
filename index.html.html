@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safety Observation Report Form - WhatsApp Submission</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .radio-card input:checked + div {
+            border-color: #2563eb;
+            background-color: #eff6ff;
+            color: #1e40af;
+        }
+        .severity-card input:checked + div {
+            border-color: currentColor;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between">
+
+    <header class="bg-slate-900 text-white shadow-md">
+        <div class="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="bg-amber-500 text-slate-900 p-2 rounded-lg font-bold flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-lg font-semibold tracking-wide">HSE Reporting Portal</h1>
+                    <p class="text-xs text-slate-400">Safety Observation & Incident Reporting</p>
+                </div>
+            </div>
+            <span class="text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-3 py-1 rounded-full flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> WhatsApp Direct
+            </span>
+        </div>
+    </header>
+
+    <main class="max-w-3xl w-full mx-auto px-4 py-8 flex-grow">
+        <div class="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
+            
+            <!-- Form Header Banner -->
+            <div class="bg-gradient-to-r from-emerald-600 to-teal-700 px-6 py-6 text-white flex items-center justify-between">
+                <div>
+                    <h2 class="text-2xl font-bold">Safety Observation Report</h2>
+                    <p class="text-emerald-100 text-sm mt-1">Submit reports directly to the HSE team via WhatsApp.</p>
+                </div>
+                <div class="hidden sm:block text-3xl opacity-80">
+                    💬
+                </div>
+            </div>
+
+            <!-- Form Element -->
+            <form id="observationForm" class="p-6 sm:p-8 space-y-8" novalidate>
+                
+                <!-- Hidden Recipients List -->
+                <div class="hidden">
+                    <select id="recipientSelect" multiple>
+                        <option value="966556093787" selected>HSE Safety Officer 1</option>
+                        <option value="966501731359" selected>HSE Safety Officer 2</option>
+                        <option value="966570694438" selected>HSE Supervisor</option>
+                    </select>
+                </div>
+
+                <!-- Section 1: Basic Information -->
+                <div class="space-y-4">
+                    <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider">1. General Information</h3>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <!-- Name -->
+                        <div>
+                            <label for="reporterName" class="block text-sm font-medium text-slate-700 mb-1">Name <span class="text-red-500">*</span></label>
+                            <input type="text" id="reporterName" name="reporterName" required placeholder="e.g., John Doe" 
+                                class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition text-sm">
+                            <p class="text-xs text-red-500 mt-1 hidden" id="error-reporterName">Please enter your name.</p>
+                        </div>
+
+                        <!-- Date & Time -->
+                        <div>
+                            <label for="reportDateTime" class="block text-sm font-medium text-slate-700 mb-1">Date & Time <span class="text-red-500">*</span></label>
+                            <input type="datetime-local" id="reportDateTime" name="reportDateTime" required 
+                                class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition text-sm bg-white">
+                            <p class="text-xs text-red-500 mt-1 hidden" id="error-reportDateTime">Please select date and time.</p>
+                        </div>
+                    </div>
+
+                    <!-- Location -->
+                    <div>
+                        <label for="location" class="block text-sm font-medium text-slate-700 mb-1">Location <span class="text-red-500">*</span></label>
+                        <input type="text" id="location" name="location" required placeholder="e.g., Warehouse Block B, Main Production Floor" 
+                            class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition text-sm">
+                        <p class="text-xs text-red-500 mt-1 hidden" id="error-location">Please specify the location.</p>
+                    </div>
+                </div>
+
+                <hr class="border-slate-100">
+
+                <!-- Section 2: Observation Category -->
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider">2. Observation Category</h3>
+                        <span class="text-xs text-slate-500 bg-slate-100 px-2.5 py-1 rounded-md">Required</span>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3" id="categoryGroup">
+                        <!-- Safety Hazard -->
+                        <label class="radio-card cursor-pointer relative block">
+                            <input type="radio" name="category" value="Safety Hazard" class="peer sr-only" required>
+                            <div class="p-4 rounded-xl border border-slate-200 bg-white hover:border-slate-300 transition flex items-center space-x-3 text-slate-700">
+                                <span class="text-amber-500 text-lg">⚠️</span>
+                                <span class="text-sm font-medium">Safety Hazard</span>
+                            </div>
+                        </label>
+
+                        <!-- Near Miss -->
+                        <label class="radio-card cursor-pointer relative block">
+                            <input type="radio" name="category" value="Near Miss" class="peer sr-only">
+                            <div class="p-4 rounded-xl border border-slate-200 bg-white hover:border-slate-300 transition flex items-center space-x-3 text-slate-700">
+                                <span class="text-blue-500 text-lg">⚡</span>
+                                <span class="text-sm font-medium">Near Miss</span>
+                            </div>
+                        </label>
+
+                        <!-- Unsafe Act -->
+                        <label class="radio-card cursor-pointer relative block">
+                            <input type="radio" name="category" value="Unsafe Act" class="peer sr-only">
+                            <div class="p-4 rounded-xl border border-slate-200 bg-white hover:border-slate-300 transition flex items-center space-x-3 text-slate-700">
+                                <span class="text-orange-500 text-lg">🛑</span>
+                                <span class="text-sm font-medium">Unsafe Act</span>
+                            </div>
+                        </label>
+
+                        <!-- Good Observation -->
+                        <label class="radio-card cursor-pointer relative block">
+                            <input type="radio" name="category" value="Good Observation" class="peer sr-only">
+                            <div class="p-4 rounded-xl border border-slate-200 bg-white hover:border-slate-300 transition flex items-center space-x-3 text-slate-700">
+                                <span class="text-emerald-500 text-lg">✅</span>
+                                <span class="text-sm font-medium">Good Observation</span>
+                            </div>
+                        </label>
+
+                        <!-- Other -->
+                        <label class="radio-card cursor-pointer relative block sm:col-span-2 lg:col-span-1">
+                            <input type="radio" name="category" value="Other" class="peer sr-only">
+                            <div class="p-4 rounded-xl border border-slate-200 bg-white hover:border-slate-300 transition flex items-center space-x-3 text-slate-700">
+                                <span class="text-purple-500 text-lg">📌</span>
+                                <span class="text-sm font-medium">Other</span>
+                            </div>
+                        </label>
+                    </div>
+                    <p class="text-xs text-red-500 mt-1 hidden" id="error-category">Please select an observation category.</p>
+                </div>
+
+                <hr class="border-slate-100">
+
+                <!-- Section 3: Severity -->
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider">3. Severity Level</h3>
+                        <span class="text-xs text-slate-500 bg-slate-100 px-2.5 py-1 rounded-md">Required</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="severityGroup">
+                        <!-- Critical -->
+                        <label class="severity-card cursor-pointer relative block">
+                            <input type="radio" name="severity" value="Critical - Immediate Action" class="peer sr-only" required>
+                            <div class="p-4 rounded-xl border-2 border-slate-200 bg-red-50/50 hover:bg-red-50 transition flex items-center justify-between text-red-700">
+                                <span class="text-sm font-semibold">Critical - Immediate Action</span>
+                                <span class="w-3 h-3 rounded-full bg-red-600"></span>
+                            </div>
+                        </label>
+
+                        <!-- High -->
+                        <label class="severity-card cursor-pointer relative block">
+                            <input type="radio" name="severity" value="High - Urgent" class="peer sr-only">
+                            <div class="p-4 rounded-xl border-2 border-slate-200 bg-orange-50/50 hover:bg-orange-50 transition flex items-center justify-between text-orange-700">
+                                <span class="text-sm font-semibold">High - Urgent</span>
+                                <span class="w-3 h-3 rounded-full bg-orange-500"></span>
+                            </div>
+                        </label>
+
+                        <!-- Medium -->
+                        <label class="severity-card cursor-pointer relative block">
+                            <input type="radio" name="severity" value="Medium" class="peer sr-only">
+                            <div class="p-4 rounded-xl border-2 border-slate-200 bg-amber-50/50 hover:bg-amber-50 transition flex items-center justify-between text-amber-700">
+                                <span class="text-sm font-semibold">Medium</span>
+                                <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+                            </div>
+                        </label>
+
+                        <!-- Low -->
+                        <label class="severity-card cursor-pointer relative block">
+                            <input type="radio" name="severity" value="Low" class="peer sr-only">
+                            <div class="p-4 rounded-xl border-2 border-slate-200 bg-emerald-50/50 hover:bg-emerald-50 transition flex items-center justify-between text-emerald-700">
+                                <span class="text-sm font-semibold">Low</span>
+                                <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                            </div>
+                        </label>
+                    </div>
+                    <p class="text-xs text-red-500 mt-1 hidden" id="error-severity">Please select a severity level.</p>
+                </div>
+
+                <hr class="border-slate-100">
+
+                <!-- Section 4: Detailed Description & Attachments -->
+                <div class="space-y-4">
+                    <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider">4. Description & Attachments</h3>
+
+                    <!-- Detailed Description -->
+                    <div>
+                        <label for="description" class="block text-sm font-medium text-slate-700 mb-1">Detailed Description <span class="text-red-500">*</span></label>
+                        <textarea id="description" name="description" rows="4" required placeholder="Describe what you observed, potential risks, or immediate actions taken..."
+                            class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition text-sm"></textarea>
+                        <p class="text-xs text-red-500 mt-1 hidden" id="error-description">Please provide a detailed description.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                        <!-- Photo Attachment Input -->
+                        <div>
+                            <label for="photoInput" class="block text-sm font-medium text-slate-700 mb-1">Photo Attachment <span class="text-slate-400 font-normal">(Optional)</span></label>
+                            <input type="file" id="photoInput" name="photoInput" accept="image/*" 
+                                class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs text-slate-500 file:mr-4 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 cursor-pointer">
+                            <div id="imagePreviewContainer" class="mt-2 hidden">
+                                <img id="imagePreview" src="" alt="Preview" class="h-20 w-auto rounded-lg border border-slate-200 object-cover">
+                            </div>
+                        </div>
+
+                        <!-- Contact Number -->
+                        <div>
+                            <label for="contactNumber" class="block text-sm font-medium text-slate-700 mb-1">Your Contact Number <span class="text-slate-400 font-normal">(Optional)</span></label>
+                            <input type="tel" id="contactNumber" name="contactNumber" placeholder="e.g., +966 50 ..."
+                                class="w-full px-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition text-sm">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submission Actions -->
+                <div class="pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <p class="text-xs text-slate-500 text-center sm:text-left">Clicking submit will instantly send the report to the HSE team via WhatsApp.</p>
+                    
+                    <div class="flex items-center space-x-3 w-full sm:w-auto">
+                        <button type="reset" id="resetBtn" class="w-full sm:w-auto px-6 py-3 rounded-xl border border-slate-300 text-slate-700 font-medium hover:bg-slate-50 transition text-sm">
+                            Clear Form
+                        </button>
+                        <button type="submit" id="submitBtn" class="w-full sm:w-auto px-8 py-3 rounded-xl bg-emerald-600 text-white font-medium hover:bg-emerald-700 shadow-lg shadow-emerald-500/25 transition text-sm flex items-center justify-center space-x-2">
+                            <span>Send Report</span>
+                            <span class="text-lg">💬</span>
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+
+            <!-- Success Notification Card -->
+            <div id="successCard" class="hidden p-10 text-center space-y-4">
+                <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-3xl font-bold">
+                    ✓
+                </div>
+                <h3 class="text-2xl font-bold text-slate-900">Report Sent Successfully!</h3>
+                <p class="text-slate-600 max-w-md mx-auto text-sm">WhatsApp has been opened with your safety observation report addressed to the HSE team.</p>
+                <div class="pt-4">
+                    <button id="newReportBtn" class="px-6 py-2.5 bg-slate-900 text-white rounded-xl text-sm font-medium hover:bg-slate-800 transition">
+                        Submit Another Report
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-center text-xs text-slate-500">
+        <p>&copy; 2026 Enterprise Health, Safety & Environment Compliance. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Set default date & time to current local time on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            const now = new Date();
+            now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+            document.getElementById('reportDateTime').value = now.toISOString().slice(0, 16);
+        });
+
+        // Image Preview Handler
+        let uploadedImageDataUrl = '';
+        const photoInput = document.getElementById('photoInput');
+        const imagePreview = document.getElementById('imagePreview');
+        const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+
+        photoInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    uploadedImageDataUrl = event.target.result;
+                    imagePreview.src = uploadedImageDataUrl;
+                    imagePreviewContainer.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
+            } else {
+                uploadedImageDataUrl = '';
+                imagePreview.src = '';
+                imagePreviewContainer.classList.add('hidden');
+            }
+        });
+
+        const form = document.getElementById('observationForm');
+        const successCard = document.getElementById('successCard');
+        const newReportBtn = document.getElementById('newReportBtn');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            let isValid = true;
+            
+            // Validate Name
+            const nameInput = document.getElementById('reporterName');
+            const nameError = document.getElementById('error-reporterName');
+            if (!nameInput.value.trim()) {
+                nameError.classList.remove('hidden');
+                nameInput.classList.add('border-red-500');
+                isValid = false;
+            } else {
+                nameError.classList.add('hidden');
+                nameInput.classList.remove('border-red-500');
+            }
+
+            // Validate Date & Time
+            const dateInput = document.getElementById('reportDateTime');
+            const dateError = document.getElementById('error-reportDateTime');
+            if (!dateInput.value) {
+                dateError.classList.remove('hidden');
+                dateInput.classList.add('border-red-500');
+                isValid = false;
+            } else {
+                dateError.classList.add('hidden');
+                dateInput.classList.remove('border-red-500');
+            }
+
+            // Validate Location
+            const locInput = document.getElementById('location');
+            const locError = document.getElementById('error-location');
+            if (!locInput.value.trim()) {
+                locError.classList.remove('hidden');
+                locInput.classList.add('border-red-500');
+                isValid = false;
+            } else {
+                locError.classList.add('hidden');
+                locInput.classList.remove('border-red-500');
+            }
+
+            // Validate Category Radio
+            const categoryChecked = document.querySelector('input[name="category"]:checked');
+            const categoryError = document.getElementById('error-category');
+            if (!categoryChecked) {
+                categoryError.classList.remove('hidden');
+                isValid = false;
+            } else {
+                categoryError.classList.add('hidden');
+            }
+
+            // Validate Severity Radio
+            const severityChecked = document.querySelector('input[name="severity"]:checked');
+            const severityError = document.getElementById('error-severity');
+            if (!severityChecked) {
+                severityError.classList.remove('hidden');
+                isValid = false;
+            } else {
+                severityError.classList.add('hidden');
+            }
+
+            // Validate Description
+            const descInput = document.getElementById('description');
+            const descError = document.getElementById('error-description');
+            if (!descInput.value.trim()) {
+                descError.classList.remove('hidden');
+                descInput.classList.add('border-red-500');
+                isValid = false;
+            } else {
+                descError.classList.add('hidden');
+                descInput.classList.remove('border-red-500');
+            }
+
+            if (isValid) {
+                const contactVal = document.getElementById('contactNumber').value.trim();
+                const photoAttachmentText = uploadedImageDataUrl ? `\n📸 *Photo Attached*` : '';
+                
+                const formattedMessage = 
+`🚨 *SAFETY OBSERVATION REPORT* 🚨
+-----------------------------------
+👤 *Name:* ${nameInput.value}
+📅 *Date & Time:* ${dateInput.value.replace('T', ' ')}
+📍 *Location:* ${locInput.value}
+
+📌 *Category:* ${categoryChecked.value}
+⚠️ *Severity:* ${severityChecked.value}
+
+📝 *Description:*
+${descInput.value}
+${photoAttachmentText}
+
+📞 *Contact:* ${contactVal ? contactVal : 'N/A'}
+-----------------------------------
+_Submitted via HSE Portal_`;
+
+                // Automatically copy report to clipboard so it's instantly ready to paste if needed
+                navigator.clipboard.writeText(formattedMessage).catch(() => {});
+
+                const encodedMessage = encodeURIComponent(formattedMessage);
+                
+                // Primary recipient number to open WhatsApp directly
+                const primaryPhone = "966556093787";
+                const whatsappUrl = `https://api.whatsapp.com/send?phone=${primaryPhone}&text=${encodedMessage}`;
+
+                // Open WhatsApp chat directly
+                window.location.href = whatsappUrl;
+
+                // Toggle success view UI
+                form.classList.add('hidden');
+                successCard.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                const firstError = document.querySelector('.text-red-500:not(.hidden)');
+                if (firstError) {
+                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+        });
+
+        // Reset form state to initial
+        newReportBtn.addEventListener('click', () => {
+            form.reset();
+            uploadedImageDataUrl = '';
+            imagePreview.src = '';
+            imagePreviewContainer.classList.add('hidden');
+            successCard.classList.add('hidden');
+            form.classList.remove('hidden');
+            
+            const now = new Date();
+            now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+            document.getElementById('reportDateTime').value = now.toISOString().slice(0, 16);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
